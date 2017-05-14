@@ -1,0 +1,2 @@
+Aplikacja korzystaj¹c z api map googla, bêdzie je wyœwietlaæ w oknie WPF. U¿ytkownik bêdzie mia³ mo¿liwoœæ tworzenia swoich w³asnych tras, zapisywania i wczytywania.
+Do archiwizacji danych zostanie wykorzystana lokalna prosta baza danych. Od u¿ytkownika, bêdzie wymagane utworzenie konta. 
