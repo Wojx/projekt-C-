@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoogleMapy"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Google Mapy" Height="700" Width="1024">
+    <Grid Loaded="GridLoaded">
+        <WebBrowser x:Name="webBrowser" HorizontalAlignment="Left" Height="649" Margin="157,10,0,0" VerticalAlignment="Top" Width="849" LoadCompleted="WebBrowser_OnLoadCompleted"/>
+
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Height="22" Width="136"  Visibility="Visible"/>
+        <Label x:Name="loginLabel" Content="Logowanie:" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="136"  Visibility="Visible"/>
+        <TextBox x:Name="loginBox" HorizontalAlignment="Left" Height="23" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"  Visibility="Visible"/>
+        <Button x:Name="loginButton" Content="Zaloguj" HorizontalAlignment="Left" Margin="84,89,0,0" VerticalAlignment="Top" Width="62" Click="loginButton_Click"  Visibility="Visible"/>
+        <Button x:Name="registerButton" Content="Zarejestruj" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="62"  Visibility="Visible"/>
+
+        <Button x:Name="logoutButton" Content="Wyloguj" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"  Click="logoutButton_Click" Visibility="Hidden"/>
+
     </Grid>
 </Window>
