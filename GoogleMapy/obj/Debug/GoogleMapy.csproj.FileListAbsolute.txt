@@ -13,3 +13,5 @@ C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.pdb
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy_Content.g.cs
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.csprojResolveAssemblyReference.cache
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GalleryWindow.g.cs
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GalleryWindow.baml

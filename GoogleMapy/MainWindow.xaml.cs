@@ -13,15 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Device.Location;
+using System.IO;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 namespace GoogleMapy {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+   
+  
+
     public partial class MainWindow : Window {
 
         private GeoCoordinate coord;
         private int zoomConst = 18;
+
+        public static bool isDialogShow = false;
         public MainWindow() {
             InitializeComponent();
 
@@ -39,7 +48,9 @@ namespace GoogleMapy {
            
         }
         //set the init properties
-        private void WebBrowser_OnLoadCompleted(object sender, NavigationEventArgs e){
+        //connection c# -> JS
+        private void WebBrowser_OnLoadCompleted(object sender, NavigationEventArgs e) {
+            webBrowser.ObjectForScripting = new HTMLConnection();
             if (coord.IsUnknown != true) {
                 webBrowser.InvokeScript("initMap", coord.Latitude, coord.Longitude, zoomConst);
             }
@@ -69,5 +80,22 @@ namespace GoogleMapy {
             logoutButton.Visibility = Visibility.Hidden;
         }
 
+        private void searchButton_Click(object sender, RoutedEventArgs e) {
+            webBrowser.InvokeScript("findAddress", searchTextBox.Text);
+        }
+
+        //connection JS -> c#
+        //conversion JS array of photosUrl to C# array
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        [ComVisible(true)]
+        public class HTMLConnection {
+            public void ShowGallery(int length, string JStab) {
+                string[] URLphotos = JStab.Split(',');
+                if (length > 0) {
+                    GalleryWindow dialog = new GalleryWindow(URLphotos);
+                    dialog.Show();
+                }
+            }
+        }
     }
 }
