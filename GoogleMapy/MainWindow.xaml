@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Google Mapy" Height="700" Width="1024">
     <Grid Loaded="GridLoaded">
-        <WebBrowser x:Name="webBrowser" HorizontalAlignment="Left" Height="649" Margin="157,10,0,0" VerticalAlignment="Top" Width="849" LoadCompleted="WebBrowser_OnLoadCompleted"/> 
+        <WebBrowser x:Name="webBrowser" HorizontalAlignment="Left" Height="649" Margin="157,10,0,0" VerticalAlignment="Top" Width="849" LoadCompleted="WebBrowser_OnLoadCompleted"/>
 
         <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Height="22" Width="136"  Visibility="Visible"/>
         <Label x:Name="loginLabel" Content="Logowanie:" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="136"  Visibility="Visible"/>
@@ -18,6 +18,18 @@
         <Button x:Name="logoutButton" Content="Wyloguj" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="75"  Click="logoutButton_Click" Visibility="Hidden"/>
         <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="10,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"/>
         <Button x:Name="searchButton" Content="Szukaj" HorizontalAlignment="Left" Margin="71,165,0,0" VerticalAlignment="Top" Width="75" Click="searchButton_Click"/>
-       
+        <Label x:Name="label" Content="Punkt początkowy:" HorizontalAlignment="Left" Margin="10,193,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="originTextBox" HorizontalAlignment="Left" Height="23" Margin="10,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"/>
+        <Label x:Name="label1" Content="Punkt docelowy:" HorizontalAlignment="Left" Margin="10,247,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="destinationTextBox" HorizontalAlignment="Left" Height="23" Margin="10,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"/>
+        <Label x:Name="label2" Content="Tryb podróży:" HorizontalAlignment="Left" Margin="10,296,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="navigationComboBox" HorizontalAlignment="Left" Margin="10,322,0,0" VerticalAlignment="Top" Width="136">
+            <ComboBoxItem IsSelected="True">Samochód</ComboBoxItem>
+            <ComboBoxItem>Rower</ComboBoxItem>
+            <ComboBoxItem>Transport publiczny</ComboBoxItem>
+            <ComboBoxItem>Pieszo</ComboBoxItem>
+        </ComboBox>
+        <Button x:Name="startNavigationButton" Content="Wyznacz trasę" HorizontalAlignment="Left" Margin="58,349,0,0" VerticalAlignment="Top" Width="88" Click="startNavigationButton_Click"/>
+
     </Grid>
 </Window>

@@ -1,29 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Device.Location;
-using System.IO;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Security.Permissions;
+
 
 namespace GoogleMapy {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-   
-  
 
     public partial class MainWindow : Window {
 
@@ -58,6 +42,25 @@ namespace GoogleMapy {
                 webBrowser.InvokeScript("initMap", -25.363, 131.044, zoomConst);
             }
         }
+        //find adress script
+        private void searchButton_Click(object sender, RoutedEventArgs e) {
+            webBrowser.InvokeScript("findAddress", searchTextBox.Text);
+        }
+        //start navigation script
+        private void startNavigationButton_Click(object sender, RoutedEventArgs e) {
+            string travelMode = "";
+            if (navigationComboBox.SelectedIndex == 0) {
+                travelMode = "DRIVING";
+            } else if (navigationComboBox.SelectedIndex == 1) {
+                travelMode = "BICYCLING";
+            } else if (navigationComboBox.SelectedIndex == 2) {
+                travelMode = "TRANSIT";
+            } else if (navigationComboBox.SelectedIndex == 3) {
+                travelMode = "WALKING";
+            }
+            webBrowser.InvokeScript("findDirection", originTextBox.Text, destinationTextBox.Text, travelMode);
+
+        }
         //login method
         private void loginButton_Click(object sender, RoutedEventArgs e) {
             loginLabel.Content = "Zalogowano jako:\n" + loginBox.Text;
@@ -80,22 +83,6 @@ namespace GoogleMapy {
             logoutButton.Visibility = Visibility.Hidden;
         }
 
-        private void searchButton_Click(object sender, RoutedEventArgs e) {
-            webBrowser.InvokeScript("findAddress", searchTextBox.Text);
-        }
-
-        //connection JS -> c#
-        //conversion JS array of photosUrl to C# array
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        [ComVisible(true)]
-        public class HTMLConnection {
-            public void ShowGallery(int length, string JStab) {
-                string[] URLphotos = JStab.Split(',');
-                if (length > 0) {
-                    GalleryWindow dialog = new GalleryWindow(URLphotos);
-                    dialog.Show();
-                }
-            }
-        }
+       
     }
 }

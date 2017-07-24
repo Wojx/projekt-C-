@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace GoogleMapy
-{
+namespace GoogleMapy {
     /// <summary>
     /// Interaction logic for GalleryWindow.xaml
     /// </summary>

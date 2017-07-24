@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="style.css"/>
    	
     <script>
+    	var mapZoom;
     	var map;
     	var geocoder;
     	var infowindow;
-        var service;
-        var marker; 
+        var placesService;
+        var directionsService;
+        var directionsDisplay;
+        var markersTab = []; 
     	function addMarker(location){
     		var marker = new google.maps.Marker({
 	          position: location,
 	          map: map
        		});
-       		//marker.setMap(map);
        		return marker;
     	}
         function initMap(latitude, longitude, zoom) {
@@ -27,22 +29,26 @@
             	center: {lat: latitude, lng: longitude},
             	zoom: zoom
             });
-            service = new google.maps.places.PlacesService(map);
+            mapZoom = zoom;
+            placesService = new google.maps.places.PlacesService(map);
         	geocoder = new google.maps.Geocoder();
         }
        	function findAddress(address){
        		geocoder.geocode( { 'address': address}, function(results, status) {
             	if (status == 'OK') {
+            		if(directionsDisplay != null){
+            			directionsDisplay.setMap(null);
+            		}
             		var location = results[0].geometry.location;
             		var placeID = results[0].place_id;
             		map.setCenter(location);
-            		if(marker) {
-            			marker.setMap(null);
-            			marker = null;
-					}
-        			marker = addMarker(location);
+            		map.setZoom(mapZoom);
+            		for (var i = 0; i < markersTab.length; i++) {
+         				 markersTab[i].setMap(null);
+      				 }
+        			markersTab[0] = addMarker(location);
 
-        			service.getDetails({
+        			placesService.getDetails({
 			        	placeId: placeID
 			        }, function(place, status) {
 			        	if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -52,22 +58,21 @@
   							//var marker = addMarker(place.location);
   							if (photos){
   								url1 = photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200});
+  								for(i = 0; i < photos.length; i++){
+				        			urlTab[i] = photos[i].getUrl({'maxWidth': 500, 'maxHeight': 500})
+				        		}
   							}
-  							google.maps.event.addListener(marker, 'click', function() {
+  							google.maps.event.addListener(markersTab[0], 'click', function() {
 				        	infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
 				        		'<img border="0" src="' + url1 + '"><br>' +
 				        		place.formatted_address + '</div>');
 				        		infowindow.open(map, this);
-				        		for(i = 0; i < photos.length; i++){
-				        		urlTab[i] = photos[i].getUrl({'maxWidth': 500, 'maxHeight': 500})
-				        		}
+				        		
 				        		window.external.ShowGallery(urlTab.length, urlTab);
 				        	});
 				        	
 			          	}
 			        });
-
-
       			} else if (status =="ZERO_RESULTS") {
         			alert('Nie znaleziono obiektu o podanej nazwie!');
       			} else if (staus == "UNKNOWN_ERROR") {
@@ -76,7 +81,42 @@
       				alert('Błąd połączenia, spradź swoje połączenie sieciowe!');
       			}
     		}); 
-  		}		
+  		}	
+  		function findDirection(origin, destination, travelMode) {
+  			var stepDisplay = new google.maps.InfoWindow;
+  			directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+        	directionsService = new google.maps.DirectionsService;
+  			for (var i = 0; i < markersTab.length; i++) {
+         		markersTab[i].setMap(null);
+      		}
+      		directionsService.route({
+	        	origin: origin,
+	        	destination: destination,
+	        	travelMode: travelMode
+        	}, function(response, status) {
+          	// Route the directions and pass the response to a function to create
+          	// markers for each step.
+          		if (status === 'OK') {
+            		directionsDisplay.setDirections(response);
+            		var myRoute = response.routes[0].legs[0];
+					for (var i = 0; i < myRoute.steps.length; i++) {
+          				var marker = markersTab[i] = markersTab[i] || new google.maps.Marker;
+         				marker.setMap(map);
+          				marker.setPosition(myRoute.steps[i].start_location);
+          				attachInstruction(stepDisplay, marker, myRoute.steps[i].instructions, map);
+        			}
+          		} else {
+            		alert('Nie odnaleziono trasy z powodu:' + status);
+          		}
+        	});
+
+  		}
+  		function attachInstruction(stepDisplay, marker, text, map) {
+  			google.maps.event.addListener(marker, 'click', function() {
+				          stepDisplay.setContent(text);
+				          stepDisplay.open(map, marker);
+        				});
+  		}
     </script>
 </head>
 <body>
