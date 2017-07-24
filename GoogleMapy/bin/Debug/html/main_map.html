@@ -63,13 +63,13 @@
 				        		}
   							}
   							google.maps.event.addListener(markersTab[0], 'click', function() {
-				        	infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-				        		'<img border="0" src="' + url1 + '"><br>' +
-				        		place.formatted_address + '</div>');
-				        		infowindow.open(map, this);
-				        		
-				        		window.external.ShowGallery(urlTab.length, urlTab);
-				        	});
+								        	infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+								        	'<img border="0" src="' + url1 + '"><br>' +
+								        	place.formatted_address + '</div>');
+								        	infowindow.open(map, this);
+								        	
+								        	window.external.ShowGallery(urlTab.length, urlTab);
+				        				});
 				        	
 			          	}
 			        });
@@ -84,27 +84,33 @@
   		}	
   		function findDirection(origin, destination, travelMode) {
   			var stepDisplay = new google.maps.InfoWindow;
-  			directionsDisplay = new google.maps.DirectionsRenderer({map: map});
-        	directionsService = new google.maps.DirectionsService;
   			for (var i = 0; i < markersTab.length; i++) {
          		markersTab[i].setMap(null);
       		}
+      		if(directionsDisplay != null)
+      			directionsDisplay.setMap(null);
+
+  			directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+        	directionsService = new google.maps.DirectionsService;
+  			
       		directionsService.route({
 	        	origin: origin,
 	        	destination: destination,
 	        	travelMode: travelMode
         	}, function(response, status) {
-          	// Route the directions and pass the response to a function to create
-          	// markers for each step.
           		if (status === 'OK') {
             		directionsDisplay.setDirections(response);
             		var myRoute = response.routes[0].legs[0];
+            		var coordArray = [];
 					for (var i = 0; i < myRoute.steps.length; i++) {
+						coordArray[i] = myRoute.steps[i].start_location;
+						
           				var marker = markersTab[i] = markersTab[i] || new google.maps.Marker;
          				marker.setMap(map);
           				marker.setPosition(myRoute.steps[i].start_location);
           				attachInstruction(stepDisplay, marker, myRoute.steps[i].instructions, map);
         			}
+        			window.external.WriteTrack(coordArray.length, JSON.stringify(coordArray));
           		} else {
             		alert('Nie odnaleziono trasy z powodu:' + status);
           		}

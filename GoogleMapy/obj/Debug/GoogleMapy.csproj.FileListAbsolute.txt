@@ -12,6 +12,12 @@ C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.exe
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.pdb
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy_Content.g.cs
-C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.csprojResolveAssemblyReference.cache
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GalleryWindow.g.cs
 C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GalleryWindow.baml
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\bin\Debug\EntityFramework.dll
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\bin\Debug\EntityFramework.xml
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\GoogleMapy.csprojResolveAssemblyReference.cache
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\RegisterWindow.g.cs
+C:\Users\Wojtek\documents\visual studio 2015\Projects\GoogleMapy\GoogleMapy\obj\Debug\RegisterWindow.baml
