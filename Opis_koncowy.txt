@@ -1,0 +1,14 @@
+Link to materia³u wideo na YT: https://www.youtube.com/watch?v=xzz9R8QVPTs
+
+Wszystkie za³o¿enia projektu zosta³y spe³nione. G³ównymi sk³adowymi aplikacji s¹ WPF, Entity Framework oraz Google Maps API v3.
+Obiekt przegl¹darki Web Browser odpowiada za wyœwietlenie strony html zawieraj¹cej skrypty JS generuj¹ce mape. Metoda Invoke() 
+klasyWeb Browser uruchamia metody po stronie JS. Klasa HTMLConnection steruje komunikacj¹ JS -> C#. Metoda window.external. uruchamia
+kod po stronie C#. Aplikacja komunikuje siê z lokaln¹ baz¹ danych poprzez Entity Framework (sposób code first, na podstawie klas encyjnych jest
+generowana baza danych). W bazie s¹ zapisane dane logowania zarejestrowanych u¿ytkowników oraz wyszukane przez nich trasy.
+
+Szczegó³y technologii Google Maps API v3.
+W projekcie zosta³y wykorzystane:
+	-podstawowe Google Maps API, s³u¿¹ce za generowanie i obs³ugê mapy
+	-geocoder API s³u¿¹ce do przetwarzania adresów, nazw i wyszukiwania ich na mapie
+	-places API s³u¿¹ce do wyszukiwania szczegó³owych danych o znalezionych miejscach (zdjêcia, adres, opis)
+	-direction API s³u¿¹ce do wyznaczania i wyœwietlania trasy pomiêdzy dwoma punktami
