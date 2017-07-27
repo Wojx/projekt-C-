@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoogleMapy"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="189" Width="300">
+        Title="Załórz nowe konto" Height="189" Width="300">
     <Grid Margin="0,0,0,8">
         <Label x:Name="label" Content="Nick:" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.434,-1.346"/>
         <Label x:Name="label1" Content="Hasło:" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top"/>

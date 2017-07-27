@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoogleMapy"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="Google Mapy" Height="700" Width="1024">
     <Grid Loaded="GridLoaded">
@@ -30,6 +31,7 @@
             <ComboBoxItem>Pieszo</ComboBoxItem>
         </ComboBox>
         <Button x:Name="startNavigationButton" Content="Wyznacz trasę" HorizontalAlignment="Left" Margin="58,349,0,0" VerticalAlignment="Top" Width="88" Click="startNavigationButton_Click"/>
+        <Button x:Name="findMeButton" Content="Znajdź mnie" HorizontalAlignment="Left" Margin="58,374,0,0" VerticalAlignment="Top" Width="88" Click="findMeButton_Click"/>
 
     </Grid>
 </Window>

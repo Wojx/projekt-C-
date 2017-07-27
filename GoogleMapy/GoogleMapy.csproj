@@ -66,13 +66,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FindTrack.cs" />
+    <Compile Include="dbClasses\FindTrack.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TravelPoint.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="dbClasses\TravelPoint.cs" />
+    <Compile Include="dbClasses\User.cs" />
     <Page Include="GalleryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

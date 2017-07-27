@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace GoogleMapy {
+    //entity class
     public class TravelPoint {
         [Key]
         public int PointId { get; set; }

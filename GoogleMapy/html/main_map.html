@@ -11,11 +11,12 @@
     	var mapZoom;
     	var map;
     	var geocoder;
-    	var infowindow;
         var placesService;
         var directionsService;
         var directionsDisplay;
         var markersTab = [];
+
+        //create and add a marker to the map
     	function addMarker(location){
     		var marker = new google.maps.Marker({
 	          position: location,
@@ -23,19 +24,21 @@
        		});
        		return marker;
     	}
+
         function initMap(latitude, longitude, zoom) {
-        	infowindow = new google.maps.InfoWindow();
             map = new google.maps.Map(document.getElementById('map'), {
             	center: {lat: latitude, lng: longitude},
             	zoom: zoom
             });
             mapZoom = zoom;
             placesService = new google.maps.places.PlacesService(map);
-        	geocoder = new google.maps.Geocoder();
+            geocoder = new google.maps.Geocoder();
         }
+        //find given place & address and display results on the map
        	function findAddress(address){
+       		var infowindow = new google.maps.InfoWindow();
        		geocoder.geocode( { 'address': address}, function(results, status) {
-            	if (status == 'OK') {
+            	if (status === 'OK') {
             		if(directionsDisplay != null){
             			directionsDisplay.setMap(null);
             		}
@@ -47,7 +50,7 @@
          				 markersTab[i].setMap(null);
       				 }
         			markersTab[0] = addMarker(location);
-
+        			// search details about place
         			placesService.getDetails({
 			        	placeId: placeID
 			        }, function(place, status) {
@@ -55,13 +58,13 @@
 			        		var photos = place.photos;
 			        		var url1 = null;
 			        		var urlTab = [];
-  							//var marker = addMarker(place.location);
   							if (photos){
   								url1 = photos[0].getUrl({'maxWidth': 200, 'maxHeight': 200});
   								for(i = 0; i < photos.length; i++){
 				        			urlTab[i] = photos[i].getUrl({'maxWidth': 500, 'maxHeight': 500})
 				        		}
   							}
+  							//display info window with short description
   							google.maps.event.addListener(markersTab[0], 'click', function() {
 								        	infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
 								        	'<img border="0" src="' + url1 + '"><br>' +
@@ -73,15 +76,16 @@
 
 			          	}
 			        });
-      			} else if (status =="ZERO_RESULTS") {
+      			} else if (status === "ZERO_RESULTS") {
         			alert('Nie znaleziono obiektu o podanej nazwie!');
-      			} else if (staus == "UNKNOWN_ERROR") {
+      			} else if (staus === "UNKNOWN_ERROR") {
       				alert('Nieznany błąd, spróbuj ponownie!');
-      			} else if (status == "ERROR") {
+      			} else if (status === "ERROR") {
       				alert('Błąd połączenia, spradź swoje połączenie sieciowe!');
       			}
     		});
   		}
+  		//find and display track from origin to destination
   		function findDirection(origin, destination, travelMode) {
   			var stepDisplay = new google.maps.InfoWindow;
   			for (var i = 0; i < markersTab.length; i++) {
@@ -97,6 +101,7 @@
 	        	origin: origin,
 	        	destination: destination,
 	        	travelMode: travelMode
+	        //create marker with travel instruction on each step
         	}, function(response, status) {
           		if (status === 'OK') {
             		directionsDisplay.setDirections(response);
@@ -117,6 +122,7 @@
         	});
 
   		}
+  		//attach instruction to the marker
   		function attachInstruction(stepDisplay, marker, text, map) {
   			google.maps.event.addListener(marker, 'click', function() {
 				          stepDisplay.setContent(text);

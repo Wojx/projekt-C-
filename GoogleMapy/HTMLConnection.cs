@@ -8,15 +8,18 @@ namespace GoogleMapy {
 
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
+
     public class HTMLConnection {
+        //variable to connect with DB
         public ApplicationDbContext db;
+        //currently logged user
         public User User { get; set; }
         public HTMLConnection(ApplicationDbContext contex) {
             User = null;
             db = contex;
         }
 
-        //conversion JS array of photosUrl to C# array
+        //conversion JS array of photosUrl to C# array, display gallery window with photos
         public void ShowGallery(int length, string JStab) {
             string[] URLphotos = JStab.Split(',');
             if (length > 0) {
@@ -24,10 +27,12 @@ namespace GoogleMapy {
                 dialog.Show();
             }
         }
-        //parse JSON array with lat%lng data to C# array
+
+        //parse JSON array with lat%lng data to C# array 
         public void WriteTrack(int latlength, dynamic latArray) {
             var serializer = new JavaScriptSerializer();
             CoordData[] data = serializer.Deserialize<CoordData[]>(latArray);
+            // save data to db when user is logged
             if (User != null) {
                 var track = new FindTrack();
                 track.UserId = User.UserId;
@@ -46,10 +51,12 @@ namespace GoogleMapy {
                 db.SaveChanges();
             }
         }
+        //class for JSON parsing
+        private class CoordData {
+            public double lng;
+            public double lat;
+        }
     }
-    public class CoordData {
-        public double lng;
-        public double lat;
-    }
+  
 
 }

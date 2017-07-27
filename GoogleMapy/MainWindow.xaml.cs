@@ -20,17 +20,20 @@ namespace GoogleMapy {
     public partial class MainWindow : Window {
 
         private GeoCoordinate coord;
+        private GeoCoordinateWatcher watcher;
         private int zoomConst = 18;
-        public User user = new User();
-        public bool isLogged = false;
-        public ApplicationDbContext db = new ApplicationDbContext();
-        public HTMLConnection obj;
+        private double defaultLat = 52.237049;
+        private double defaultLng = 21.017532;
+        private User User = new User();
+        private bool IsLogged = false;
+        private ApplicationDbContext db = new ApplicationDbContext();
+        private HTMLConnection ObjToConnect;
+
         public MainWindow() {
             InitializeComponent();
-            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+            watcher = new GeoCoordinateWatcher();
             watcher.TryStart(false, TimeSpan.FromMilliseconds(1000));
-            coord = watcher.Position.Location;
-            obj = new HTMLConnection(db);
+            ObjToConnect = new HTMLConnection(db);
         }
         //create simple hash
         private string createHash(string rawString) {
@@ -41,25 +44,28 @@ namespace GoogleMapy {
         }
         //load google maps html file
         private void GridLoaded(object sender, RoutedEventArgs e) {
-            var sURL = AppDomain.CurrentDomain.BaseDirectory + @"html\main_map.html";
-            Uri uri = new Uri(sURL);
-            webBrowser.Navigate(uri);
-           
+            var sUrl = AppDomain.CurrentDomain.BaseDirectory + @"html\main_map.html";
+            webBrowser.Navigate(new Uri(sUrl));
         }
         //set the init properties
-        //connection c# -> JS
         private void WebBrowser_OnLoadCompleted(object sender, NavigationEventArgs e) {
-            webBrowser.ObjectForScripting = obj;
-            if (coord.IsUnknown != true) {
-                webBrowser.InvokeScript("initMap", coord.Latitude, coord.Longitude, zoomConst);
-            }
-            else {
-                webBrowser.InvokeScript("initMap", -25.363, 131.044, zoomConst);
-            }
+            webBrowser.ObjectForScripting = ObjToConnect;
+            webBrowser.InvokeScript("initMap", defaultLat, defaultLng, zoomConst);
         }
         //find adress script
         private void searchButton_Click(object sender, RoutedEventArgs e) {
             webBrowser.InvokeScript("findAddress", searchTextBox.Text);
+        }
+        //try to find user localization
+        private void findMeButton_Click(object sender, RoutedEventArgs e) {
+            coord = watcher.Position.Location;
+            if (!coord.IsUnknown) {
+                webBrowser.InvokeScript("setMapCenter", coord.Latitude, coord.Longitude, zoomConst);
+            }
+            else {
+                MessageBox.Show("Nie można odnaleźć Twojej lokalizacji!", "GoogleMapy", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+            }
         }
         //start navigation script
         private void startNavigationButton_Click(object sender, RoutedEventArgs e) {
@@ -83,10 +89,10 @@ namespace GoogleMapy {
             var query = db.Users
                           .FirstOrDefault(x => x.Login == login && x.PasswordHash == passHash);
             if (query != null) {
-                user = query;
+                User = query;
                 db.SaveChanges();
-                isLogged = true;
-                obj.User = user;
+                IsLogged = true;
+                ObjToConnect.User = User;
                 loginLabel.Content = "Zalogowano jako:\n" + loginTextBox.Text;
                 loginTextBox.Visibility = Visibility.Hidden;
                 passwordBox.Visibility = Visibility.Hidden;
@@ -102,9 +108,9 @@ namespace GoogleMapy {
 
         //logout method
         private void logoutButton_Click(object sender, RoutedEventArgs e) {
-            user = null;
-            isLogged = false;
-            obj.User = null;
+            User = null;
+            IsLogged = false;
+            ObjToConnect.User = null;
             loginLabel.Content = "Logowanie: ";
             loginTextBox.Visibility = Visibility.Visible;
             passwordBox.Visibility = Visibility.Visible;
@@ -113,7 +119,7 @@ namespace GoogleMapy {
 
             logoutButton.Visibility = Visibility.Hidden;
         }
-
+        //register new user and save to db
         private void registerButton_Click(object sender, RoutedEventArgs e) {
             var dialog = new RegisterWindow();
             if (dialog.ShowDialog() == true) {
